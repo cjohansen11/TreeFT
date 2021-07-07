@@ -1,0 +1,9 @@
+# folders
+config
+node_modules
+client/dist
+build
+
+# files
+yarn.lock
+yarn-error.log
