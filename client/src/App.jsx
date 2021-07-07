@@ -10,6 +10,7 @@ import { sketchToo } from './sketchToo.js';
  */
 const Web3 = require('web3');
 const { abi } = require('../../build/contracts/TFTFactory.json');
+const { contractAddr } = require('../../config/config.js');
 /**
  * Misc imports
  */
@@ -47,11 +48,6 @@ const App = ({ web3 }) => {
   const [canMint, setCanMint] = useState(false);
   const [isTranfer, setIsTransfer] = useState(false);
   const [featuredToken, setFeaturedToken] = useState('');
-
-  /**
-   * MISC. Variables
-   */
-  const contractAddr = '0x1dB358283fEbD3926E640DEe977023Ee20fF5488';
 
   /**
    * Contract connection
