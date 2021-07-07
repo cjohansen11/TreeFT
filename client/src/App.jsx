@@ -1,20 +1,39 @@
 import React, { useState, useEffect } from 'react';
+/**
+ * P5 imports
+ */
 import P5Wrapper from 'react-p5-wrapper';
 import { sketch } from './sketch.js';
 import { sketchToo } from './sketchToo.js';
-const axios = require('axios');
+/**
+ * Ethereum/Blockchain imports
+ */
 const Web3 = require('web3');
 const { abi } = require('../../build/contracts/TFTFactory.json');
+/**
+ * Misc imports
+ */
+const axios = require('axios');
 import uniqueString from 'unique-string';
+/**
+ * Component imports
+ */
 import Art from './Components/Art.jsx';
 import Gallery from './Components/Gallery.jsx';
 import NewMint from './Components/NewMint.jsx';
 import Connected from './Components/Connected.jsx';
 import Navigation from './Components/Navigation.jsx';
+import Transfer from './Components/Transfer.jsx';
+/**
+ * Styling import
+ */
 import './styles/styles.css';
 
 
 const App = ({ web3 }) => {
+  /**
+   * STATES
+   */
   const [generate, setGenerate] = useState(false);
   const [image, setImage] = useState('');
   const [currentAccount, setCurrentAccount] = useState('');
@@ -26,10 +45,22 @@ const App = ({ web3 }) => {
   const [addBlur, setAddBlur] = useState(false);
   const [imageCollection, setImageCollection] = useState([]);
   const [canMint, setCanMint] = useState(false);
+  const [isTranfer, setIsTransfer] = useState(false);
+  const [featuredToken, setFeaturedToken] = useState('');
 
+  /**
+   * MISC. Variables
+   */
   const contractAddr = '0x1dB358283fEbD3926E640DEe977023Ee20fF5488';
+
+  /**
+   * Contract connection
+   */
   const TFT = new web3.eth.Contract(abi, contractAddr);
 
+  /**
+   * Chain event listeners
+   */
   TFT.events.newTFT({ filter: { to: currentAccount } })
     .on('data', event => {
       setNewToken(JSON.stringify(event));
@@ -37,12 +68,22 @@ const App = ({ web3 }) => {
       setAddBlur(true);
     })
 
+  /**
+   * Fetches token URI data from chain
+   */
   const getTokenURI = async (_token) => {
     let tokenURI = await TFT.methods.treeFTs(Number(_token)).call();
     let parsedTokenURI = JSON.parse(tokenURI);
-    setImageCollection(prev => [...prev, parsedTokenURI.image]);
+    let tokenObject = {
+      token: _token,
+      image: parsedTokenURI.image
+    }
+    setImageCollection(prev => [...prev, tokenObject]);
   }
 
+  /**
+   * Fetches all tokens for a given address
+   */
   const getCollection = async (_address) => {
     setShowGallery(true);
     setAddBlur(true);
@@ -52,6 +93,9 @@ const App = ({ web3 }) => {
     })
   }
 
+  /**
+   * Mints a new token
+   */
   const _generateTFT = (_data) => {
     _data = JSON.stringify(_data);
     TFT.methods.generateNewTFT(_data).send({ from: currentAccount })
@@ -65,6 +109,10 @@ const App = ({ web3 }) => {
       })
   }
 
+  /**
+   * Uploads data to S3 database
+   * then calls _generateTFT to mint new token
+   */
   const saveImg = async () => {
     setTimeout(() => {
       setLoading(true);
@@ -90,18 +138,43 @@ const App = ({ web3 }) => {
       })
   }
 
+  /**
+   * Handles transfer requests between accounts
+   */
+  const transferToken = (_tokenId, _to) => {
+    setLoading(true);
+    TFT.methods.transferFrom(currentAccount, _to, _tokenId).send({ from: currentAccount })
+      .on('error', err => {
+        console.log(err.message);
+        setLoading(false);
+        setIsTransfer(false);
+      })
+      .on('receipt', receipt => {
+        console.log(receipt);
+        setLoading(false);
+        setIsTransfer(false);
+        setImageCollection([]);
+        getCollection(currentAccount);
+      })
+  }
+
+  /**
+   * Operates the 'curtains' and generates a new art piece
+   */
   const createArt = async () => {
     let checkbox = document.getElementsByClassName('checkbox')[0].checked;
     if (checkbox) {
       document.getElementsByClassName('checkbox')[0].checked = !checkbox
     }
-
     if (!checkbox) {
       document.getElementsByClassName('checkbox')[0].checked = !checkbox
       setGenerate(!generate)
     }
   }
 
+  /**
+   * Makes a check every millisecond to see if current connected account has changed
+   */
   useEffect(async () => {
     const checkAccount = setInterval(async () => {
       let accounts = await web3.eth.getAccounts();
@@ -128,12 +201,19 @@ const App = ({ web3 }) => {
         setShowGallery={setShowGallery}
         imageCollection={imageCollection}
         setAddBlur={setAddBlur}
-        setImageCollection={setImageCollection} /> : null}
+        setImageCollection={setImageCollection}
+        featuredToken={featuredToken}
+        setFeaturedToken={setFeaturedToken}
+        setIsTransfer={setIsTransfer} /> : null}
       {isNewMint ? <NewMint
         newToken={newToken}
         newMintJSON={newMintJSON}
         setIsNewMint={setIsNewMint}
         setAddBlur={setAddBlur} /> : null}
+        {isTranfer ? <Transfer
+        featuredToken={featuredToken}
+        transferToken={transferToken}
+        loading={loading} /> : null}
     </div>
   )
 }

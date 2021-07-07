@@ -55,14 +55,6 @@
   letter-spacing: 10px;
 }
 
-/* .mint-contract {
-  font-size: 20px;
-}
-
-.mint-transaction {
-  font-size: 20px;
-} */
-
 .mint-contract .mint-transaction {
   font-size: 20px;
   font-weight: 100;
