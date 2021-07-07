@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from 'react';
+
 /**
  * P5 imports
  */
 import P5Wrapper from 'react-p5-wrapper';
 import { sketch } from './sketch.js';
 import { sketchToo } from './sketchToo.js';
+
 /**
  * Ethereum/Blockchain imports
  */
 const Web3 = require('web3');
 const { abi } = require('../../build/contracts/TFTFactory.json');
 const { contractAddr } = require('../../config/config.js');
+
 /**
  * Misc imports
  */
 const axios = require('axios');
 import uniqueString from 'unique-string';
+
 /**
  * Component imports
  */
@@ -25,6 +29,7 @@ import NewMint from './Components/NewMint.jsx';
 import Connected from './Components/Connected.jsx';
 import Navigation from './Components/Navigation.jsx';
 import Transfer from './Components/Transfer.jsx';
+
 /**
  * Styling import
  */
@@ -32,6 +37,7 @@ import './styles/styles.css';
 
 
 const App = ({ web3 }) => {
+
   /**
    * STATES
    */
@@ -181,6 +187,7 @@ const App = ({ web3 }) => {
 
   return (
     <div className="app">
+      {/* {Navigation bar} */}
       <Navigation
         createArt={createArt}
         saveImg={saveImg}
@@ -189,10 +196,12 @@ const App = ({ web3 }) => {
         canMint={canMint}
         setCanMint={setCanMint}
         addBlur={addBlur} />
+        {/* {Frame with CSS curtains and P5 sketches} */}
       <Art
         generate={generate}
         loading={loading}
         addBlur={addBlur} />
+        {/* {Gallery modal - appears when Gallery button is clicked} */}
       {showGallery ? <Gallery
         setShowGallery={setShowGallery}
         imageCollection={imageCollection}
@@ -201,11 +210,13 @@ const App = ({ web3 }) => {
         featuredToken={featuredToken}
         setFeaturedToken={setFeaturedToken}
         setIsTransfer={setIsTransfer} /> : null}
+        {/* {Mint modal - appears when new mint is successful} */}
       {isNewMint ? <NewMint
         newToken={newToken}
         newMintJSON={newMintJSON}
         setIsNewMint={setIsNewMint}
         setAddBlur={setAddBlur} /> : null}
+        {/* {Transfer modal - appears when Transfer button is clicked within the gallery} */}
         {isTranfer ? <Transfer
         featuredToken={featuredToken}
         transferToken={transferToken}
