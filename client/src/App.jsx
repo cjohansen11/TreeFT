@@ -9,10 +9,9 @@ import uniqueString from 'unique-string';
 import Art from './Components/Art.jsx';
 import Gallery from './Components/Gallery.jsx';
 import NewMint from './Components/NewMint.jsx';
-import Styles from './styles/styles.css';
-import Frame from './styles/gold_frame.png';
-import Metamask from './styles/metamask.svg';
-import { GoPrimitiveDot } from 'react-icons/go';
+import Connected from './Components/Connected.jsx';
+import Navigation from './Components/Navigation.jsx';
+import './styles/styles.css';
 
 
 const App = ({ web3 }) => {
@@ -25,16 +24,46 @@ const App = ({ web3 }) => {
   const [newMintJSON, setNewMintJSON] = useState('');
   const [newToken, setNewToken] = useState('');
   const [addBlur, setAddBlur] = useState(false);
+  const [imageCollection, setImageCollection] = useState([]);
+  const [canMint, setCanMint] = useState(false);
 
-  const contractAddr = '0xC8E045632e08C8E0173FC52894f2441a25aE0C91';
+  const contractAddr = '0x1dB358283fEbD3926E640DEe977023Ee20fF5488';
   const TFT = new web3.eth.Contract(abi, contractAddr);
 
-  TFT.events.newTFT({ filter: { to: currentAccount }})
+  TFT.events.newTFT({ filter: { to: currentAccount } })
     .on('data', event => {
       setNewToken(JSON.stringify(event));
       setIsNewMint(true);
       setAddBlur(true);
     })
+
+  const getTokenURI = async (_token) => {
+    let tokenURI = await TFT.methods.treeFTs(Number(_token)).call();
+    let parsedTokenURI = JSON.parse(tokenURI);
+    setImageCollection(prev => [...prev, parsedTokenURI.image]);
+  }
+
+  const getCollection = async (_address) => {
+    setShowGallery(true);
+    setAddBlur(true);
+    let tokens = await TFT.methods.getTFTsToOwner(_address).call();
+    tokens.forEach(async (token) => {
+      await getTokenURI(token);
+    })
+  }
+
+  const _generateTFT = (_data) => {
+    _data = JSON.stringify(_data);
+    TFT.methods.generateNewTFT(_data).send({ from: currentAccount })
+      .on('error', err => {
+        setLoading(false);
+        console.log('ERROR:', err.message)
+      })
+      .on('receipt', receipt => {
+        console.log(receipt)
+        setLoading(false);
+      })
+  }
 
   const saveImg = async () => {
     setTimeout(() => {
@@ -54,22 +83,15 @@ const App = ({ web3 }) => {
     await axios.post('/fileUpload', data)
       .then(res => {
         setNewMintJSON(JSON.stringify(res.data))
-        TFT.methods.generateNewTFT(res.data).send({ from: currentAccount })
-          .on('error', err => {
-            setLoading(false);
-            console.log('ERROR:', err.message)
-          })
-          .on('receipt', receipt => {
-            console.log(receipt)
-            setLoading(false);
-          })
+        return res.data;
+      })
+      .then((data) => {
+        _generateTFT(data);
       })
   }
 
   const createArt = async () => {
-    setShowGallery(true)
     let checkbox = document.getElementsByClassName('checkbox')[0].checked;
-
     if (checkbox) {
       document.getElementsByClassName('checkbox')[0].checked = !checkbox
     }
@@ -90,23 +112,28 @@ const App = ({ web3 }) => {
 
   return (
     <div className="app">
-      <div className="connected-account">
-      <img src={Metamask} className="metamask" />
-      <h4>{currentAccount.slice(0, 6) + '...' + currentAccount.slice(37)}</h4>
-      <GoPrimitiveDot className="eth-logo" />
-      </div>
-      <div className={`app-wrapper ${ addBlur ? 'add-blur' : ''}`}>
-        <div className="art-wrapper">
-          <img src={Frame} className="frame" />
-          <Art generate={generate} createArt={createArt} loading={loading} />
-        </div>
-        <div className="buttons">
-          <button onClick={saveImg}>Click to Generate</button>
-          <button onClick={createArt}>Click to add</button>
-        </div>
-      </div>
-      {/* {showGallery ? <Gallery showGallery={showGallery} /> : null} */}
-      { isNewMint ? <NewMint newToken={newToken} newMintJSON={newMintJSON} setIsNewMint={setIsNewMint} setAddBlur={setAddBlur} /> : null }
+      <Navigation
+        createArt={createArt}
+        saveImg={saveImg}
+        getCollection={getCollection}
+        currentAccount={currentAccount}
+        canMint={canMint}
+        setCanMint={setCanMint}
+        addBlur={addBlur} />
+      <Art
+        generate={generate}
+        loading={loading}
+        addBlur={addBlur} />
+      {showGallery ? <Gallery
+        setShowGallery={setShowGallery}
+        imageCollection={imageCollection}
+        setAddBlur={setAddBlur}
+        setImageCollection={setImageCollection} /> : null}
+      {isNewMint ? <NewMint
+        newToken={newToken}
+        newMintJSON={newMintJSON}
+        setIsNewMint={setIsNewMint}
+        setAddBlur={setAddBlur} /> : null}
     </div>
   )
 }

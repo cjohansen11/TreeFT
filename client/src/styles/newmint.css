@@ -13,7 +13,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%;
+  width: 60%;
   height: 80%;
   background: rgb(41, 105, 105);
   display: flex;
@@ -21,7 +21,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-evenly;
-  align-content: flex-start;
+  align-content: center;
   box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.4);
 }
 
@@ -38,24 +38,55 @@
   align-content: flex-start;
   justify-content: flex-start;
   align-items: center;
-  height: 350px;
-  width: 600px;
+  height: auto;
+  width: 20%;
   box-shadow: 2px 2px 14px 4px;
 }
 
 .mint-image {
+  height: 75%;
   box-shadow: 0px 0px 30px 10px black;
 }
 
 .new-mint-title {
   font-size: 40px;
   margin: 20px 0px 0px 0px;
+  font-weight: 100;
+  letter-spacing: 10px;
 }
 
-.mint-contract {
+/* .mint-contract {
   font-size: 20px;
 }
 
 .mint-transaction {
   font-size: 20px;
+} */
+
+.mint-contract .mint-transaction {
+  font-size: 20px;
+  font-weight: 100;
+}
+
+div.metadata > a {
+  font-weight: 100;
+  letter-spacing: 4px;
+}
+
+div.metadata > a:last-child {
+  margin-bottom: 20px;
+}
+
+button.close-mint {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  border: .2px solid white;
+  border-radius: 6px;
+  color: white;
+  background: rgb(41, 95, 95);
+}
+
+button.close-mint:hover {
+  background: linear-gradient(55deg, rgba(253,187,45,1) 0%, rgba(58,28,113,1) 100%);
 }

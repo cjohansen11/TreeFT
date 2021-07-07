@@ -39,6 +39,7 @@ contract TFTFactory is Ownable, ERC721 {
 
   function transferFrom(address _from, address _to, uint256 _tokenId) external payable {
     require(_tftToOwner[_tokenId] == msg.sender || _tftApprovals[_tokenId] == msg.sender);
+    require(_ownerTFTCount[_to] < MAX_TFT);
     _transfer(_from, _to, _tokenId);
   }
 
@@ -64,7 +65,7 @@ contract TFTFactory is Ownable, ERC721 {
   function getTFTsToOwner(address _owner) public view returns (uint[] memory) {
     uint[] memory TFTs = new uint[](_ownerTFTCount[_owner]);
     uint counter = 0;
-    for (let i = 0; i < treeFTs.length; i++) {
+    for (uint i = 0; i < treeFTs.length; i++) {
       if (_tftToOwner[i] == _owner) {
         TFTs[counter] = i;
         counter++;

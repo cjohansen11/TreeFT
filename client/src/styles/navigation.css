@@ -1,0 +1,131 @@
+.navigation {
+  /* background: rgb(41, 105, 105); */
+  width: 30%;
+  height: 40px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 6px;
+}
+
+button.already-collector {
+  height: 70%;
+  background: rgb(41, 95, 95);
+  border: .2px solid white;
+  border-radius: 6px;
+  color: white;
+  font-family: sans-serif;
+  font-weight: 100;
+  cursor: pointer;
+}
+
+button.already-collector:hover {
+  background: linear-gradient(55deg, rgba(253,187,45,1) 0%, rgba(58,28,113,1) 100%);
+}
+
+button.new-collector {
+  height: 70%;
+  background: rgb(41, 95, 95);
+  border: .2px solid white;
+  border-radius: 6px;
+  color: white;
+  font-family: sans-serif;
+  font-weight: 100;
+  cursor: pointer;
+}
+
+button.new-collector:hover {
+  background: linear-gradient(55deg, rgba(253,187,45,1) 0%, rgba(58,28,113,1) 100%);
+}
+
+button.save-to-collection {
+  height: 70%;
+  background: rgb(41, 95, 95);
+  border: .2px solid white;
+  border-radius: 6px;
+  color: white;
+  font-family: sans-serif;
+  font-weight: 100;
+  cursor: pointer;
+}
+
+button.save-to-collection:hover {
+  background: linear-gradient(55deg, rgba(253,187,45,1) 0%, rgba(58,28,113,1) 100%);
+}
+/*
+.main-title {
+  font-size: 60px;
+position: relative;
+margin: 0;
+left: -40px;
+font-family: 'Arima Madurai';
+letter-spacing: px;
+text-transform: lowercase;
+transform: scale(1, 2);
+}
+
+.description {
+  font-family: sans-serif;
+  position: relative;
+  margin: 0;
+  left: 10px;
+  font-size: 20px;
+}
+
+.description-cont {
+  font-family: cursive;
+  font-size: 50px;
+  margin: 0;
+  position: relative;
+  left: 140px;
+  top: -10px;
+}
+
+.options {
+  position: relative;
+  font-family: sans-serif;
+  font-weight: 300;
+  font-size: 40px;
+  text-decoration: overline;
+  top: -30px;
+}
+
+.already-collector {
+    height: 70%;
+    background: rgb(41, 95, 95);
+    border: .2px solid white;
+    border-radius: 10px;
+    color: white;
+    font-family: sans-serif;
+    font-weight: 100;
+}
+
+.new-collector {
+  position: relative;
+  font-family: monospace;
+  font-weight: 100;
+  font-size: 50px;
+  transform: rotate(348deg);
+  top: -60px;
+  left: 170px;
+  letter-spacing: -3px;
+  margin: 0;
+  width: 280px;
+  cursor: pointer;
+}
+
+.save-to-collection {
+  position: relative;
+  margin: 0;
+  font-size: 40px;
+  font-weight: 400;
+  transform: rotate(6deg);
+  top: -30px;
+  left: 30px;
+  left: 0px;
+  letter-spacing: 4px;
+  cursor: pointer;
+} */
