@@ -4,7 +4,6 @@ import '../styles/gallery.css';
 const ImageCollection = ({ token, image, changeFeatured }) => {
   return (
     <div className="collection-image">
-      {console.log('image', image)}
       <img
         src={image}
         className="each-image-icon"

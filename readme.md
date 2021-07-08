@@ -1,15 +1,17 @@
 # TreeFT
 
-TreeFT is a generative art and blockchain project utilizing Solidity, Web3, AWS S3, P5, and React.
+TreeFT is a generative art and blockchain project utilizing Solidity, Web3, IPFS, P5, and React.
 
 The application is capable of generating random art with P5, mint custom ERC71 tokens with URI data, fetch and display tokens based on the wallet account connected, and transfer tokens to another Ethereum wallet.
+
+I originally set this project up with AWS S3 however in the spirit of blockchain I migrated the file system to IPFS utilizing a locally hosted node for uploads.
 ## Tech Stack
 
 **Client:** React, P5, Axios, Webpack, Babel, CSS
 
 **Blockchain:** Solidity, Truffle, Ganache, Web3, Remix
 
-**Server:** NodeJS, Express, AWS S3
+**Server:** NodeJS, Express, IPFS
 
 
 ## Screenshots

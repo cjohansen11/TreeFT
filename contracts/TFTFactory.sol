@@ -39,7 +39,6 @@ contract TFTFactory is Ownable, ERC721 {
 
   function transferFrom(address _from, address _to, uint256 _tokenId) external payable {
     require(_tftToOwner[_tokenId] == msg.sender || _tftApprovals[_tokenId] == msg.sender);
-    require(_ownerTFTCount[_to] < MAX_TFT);
     _transfer(_from, _to, _tokenId);
   }
 

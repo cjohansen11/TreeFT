@@ -140,6 +140,53 @@ input[type=checkbox]:checked ~ div.curtain__panel--right {
   font-size: 14px;
 }
 
+.tooltip {
+  position:relative;
+  text-align:left;
+}
+
+.tooltip .bottom {
+  top:40px;
+  left:50%;
+  transform:translate(-50%, 0);
+  padding-left: 4px;
+  padding-left: 4px;
+  color:#FFFFFF;
+  background: linear-gradient(55deg, rgba(253,187,45,1) 0%, rgba(58,28,113,1) 100%);
+  font-weight:normal;
+  font-size:13px;
+  border-radius:8px;
+  position:absolute;
+  z-index:99999999;
+  box-sizing:border-box;
+  visibility:hidden; opacity:0; transition:opacity 0.8s;
+}
+
+.tooltip:hover .bottom {
+  visibility:visible; opacity:1;
+}
+
+.tooltip .bottom i {
+  position:absolute;
+  bottom:100%;
+  left:50%;
+  margin-left:-12px;
+  width:24px;
+  height:12px;
+  overflow:hidden;
+}
+
+.tooltip .bottom i::after {
+  content:'';
+  position:absolute;
+  width:12px;
+  height:12px;
+  left:50%;
+  transform:translate(-50%,50%) rotate(45deg);
+  background: linear-gradient(55deg, rgba(253,187,45,1) 0%, rgba(58,28,113,1) 100%);
+  border:1px solid transparent;box-shadow:0 1px 8px rgba(0,0,0,0.5);
+}
+
 .lds-ring {
   display: flex;
   justify-content: space-around;
