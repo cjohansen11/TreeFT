@@ -41,3 +41,17 @@
 .address-input {
   width: 330px;
 }
+
+button.close-transfer {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  border: .2px solid white;
+  border-radius: 6px;
+  color: white;
+  background: rgb(41, 95, 95);
+}
+
+button.close-transfer:hover {
+  background: linear-gradient(55deg, rgba(253,187,45,1) 0%, rgba(58,28,113,1) 100%);
+}

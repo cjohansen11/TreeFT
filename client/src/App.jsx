@@ -220,7 +220,8 @@ const App = ({ web3 }) => {
         {isTranfer ? <Transfer
         featuredToken={featuredToken}
         transferToken={transferToken}
-        loading={loading} /> : null}
+        loading={loading}
+        setIsTransfer={setIsTransfer} /> : null}
     </div>
   )
 }

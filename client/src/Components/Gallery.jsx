@@ -5,11 +5,19 @@ import '../styles/gallery.css';
 const Gallery = ({ setShowGallery, imageCollection, setImageCollection, setAddBlur, featuredToken, setFeaturedToken, setIsTransfer }) => {
   const [featured, setFeatured] = useState('');
 
+  /**
+   * Changes the featured product and token information
+   * Featured displays the featured image
+   * FeaturedToken is utilized during the transfer process
+   */
   const changeFeatured = (_token) => {
     setFeatured(_token.image);
     setFeaturedToken(_token);
   }
 
+  /**
+   * Sets the featured product on initial load of the modal
+   */
   useEffect(() => {
     if (imageCollection.length) {
       setFeaturedToken(imageCollection[0]);

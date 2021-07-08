@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/transfer.css';
 
-const Transfer = ({ featuredToken, transferToken, loading }) => {
+const Transfer = ({ featuredToken, transferToken, loading, setIsTransfer }) => {
   const [transferAddr, setTransferAddr] = useState('');
 
   return (
     <div className="transfer-screen">
       <div className="active-transfer">
+        <button className="close-transfer" onClick={() => {
+          setIsTransfer(false);
+        }}>Close</button>
         <div className="featured-image">
           {loading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> : null}
           <img
