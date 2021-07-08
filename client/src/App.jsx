@@ -11,7 +11,8 @@ import { sketchToo } from './sketchToo.js';
  * Ethereum/Blockchain imports
  */
 const Web3 = require('web3');
-const { abi } = require('../../build/contracts/TFTFactory.json');
+const { abi } = require('../../build/contracts/NFTCreatorFactory.json');
+// const { abi } = require('../../build/contracts/TFTFactory.json');
 const { contractAddr } = require('../../config/config.js');
 
 /**
@@ -63,7 +64,7 @@ const App = ({ web3 }) => {
   /**
    * Chain event listeners
    */
-  TFT.events.newTFT({ filter: { to: currentAccount } })
+  TFT.events.NewTFT({ filter: { to: currentAccount } })
     .on('data', event => {
       setNewToken(JSON.stringify(event));
       setIsNewMint(true);
@@ -74,11 +75,12 @@ const App = ({ web3 }) => {
    * Fetches token URI data from chain
    */
   const getTokenURI = async (_token) => {
-    let tokenURI = await TFT.methods.treeFTs(Number(_token)).call();
+    _token = Number(_token);
+    let tokenURI = await TFT.methods.tokenURI(_token).call();
     let parsedTokenURI = JSON.parse(tokenURI);
     let tokenObject = {
       token: _token,
-      image: parsedTokenURI.image
+      image: parsedTokenURI.properties.image.description
     }
     setImageCollection(prev => [...prev, tokenObject]);
   }
@@ -112,7 +114,7 @@ const App = ({ web3 }) => {
   }
 
   /**
-   * Uploads data to S3 database
+   * Uploads data to IPFS
    * then calls _generateTFT to mint new token
    */
   const saveImg = async () => {

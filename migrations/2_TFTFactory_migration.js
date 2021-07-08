@@ -1,5 +1,5 @@
-const TFTFactory = artifacts.require("TFTFactory");
+const NFTCreatorFactory = artifacts.require("NFTCreatorFactory");
 
 module.exports = function (deployer) {
-  deployer.deploy(TFTFactory);
+  deployer.deploy(NFTCreatorFactory);
 };

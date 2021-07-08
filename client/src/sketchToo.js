@@ -2,13 +2,23 @@ const sketchToo = p5 => {
   let height = 600;
   let width = 700;
 
+  let c1r = p5.random(255);
+  let c1g = p5.random(255);
+  let c1b = p5.random(255);
+
+  let c2r = p5.random(255);
+  let c2g = p5.random(255);
+  let c2b = p5.random(255);
+
+  let chance = Math.floor(Math.random() * 1000);
+
   p5.setup = () => {
     p5.createCanvas(width, height);
     p5.angleMode(p5.DEGREES);
     p5.noLoop();
 
-    let c1 = p5.color(p5.random(255), p5.random(255), p5.random(255));
-    let c2 = p5.color(p5.random(255), p5.random(255), p5.random(255));
+    let c1 = p5.color(c1r, c1b, c1g);
+    let c2 = p5.color(c2r, c2b, c2g);
 
     for(let y = 0; y < height; y++) {
       let n = p5.map(y, 0, height, 0, 1);
@@ -35,10 +45,19 @@ const sketchToo = p5 => {
       p5.rotate(p5.random(40, 80));
       p5.branch(length * p5.random(p5.random(0.7, 0.99), p5.random(0.2, 0.99)));
     } else {
-      let r = p5.random(255);
-      let g = p5.random(255);
-      let b = p5.random(255);
-      p5.fill(r, g, b, 200);
+      let r, g, b;
+
+      if (chance < 4) {
+        r = p5.random(255);
+        g = p5.random(255);
+        b = p5.random(255);
+      } else {
+        r = p5.random(c1r, c2r);
+        g = p5.random(c1g, c2g);
+        b = p5.random(c1b, c2b);
+      }
+
+      p5.fill(r, g, b, p5.random(125, 200));
       p5.noStroke();
 
       p5.beginShape()
@@ -48,10 +67,10 @@ const sketchToo = p5 => {
         let y = rad * p5.sin(k);
         p5.vertex(x, y);
       }
-      for (let j = 135; j > 40; j--) {
+      for (let k = 135; k > 40; k--) {
         let rad = 15;
-        let x = rad * p5.cos(j);
-        let y = rad * p5.sin(-j) + 20;
+        let x = rad * p5.cos(k);
+        let y = rad * p5.sin(-k) + 20;
         p5.vertex(x, y);
       }
       p5.endShape(p5.CLOSE);

@@ -9,9 +9,18 @@ const addFile = async (req, res) => {
   const pinFile = await ipfs.pin.add(filesAdded.cid);
 
   const tokenURI = {
-    name: 'TreeFT',
-    description: 'Generative art NFT',
-    image: `http://localhost:8080/ipfs/${filesAdded.path}`
+    title: 'TreeFT',
+    type: 'object',
+    properties: {
+      name: {
+        type: 'string',
+        description: 'TreeFT'
+      },
+      image: {
+        type: 'string',
+        description: `http://localhost:8080/ipfs/${filesAdded.path}`
+      }
+    }
   }
 
   const jsonAdded = await ipfs.add(JSON.stringify(tokenURI));

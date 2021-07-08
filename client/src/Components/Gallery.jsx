@@ -34,7 +34,7 @@ const Gallery = ({ setShowGallery, imageCollection, setImageCollection, setAddBl
             setAddBlur(false);
             setImageCollection([]);
           }}>Close</button>
-        <button
+        {imageCollection.length ? <><button
         className="submit-transfer"
         onClick={() => setIsTransfer(true)}
         >Transfer</button>
@@ -49,7 +49,7 @@ const Gallery = ({ setShowGallery, imageCollection, setImageCollection, setAddBl
               key={token.token}
               changeFeatured={changeFeatured} />
           })}
-        </div>
+        </div></> : <div className="lds-ring"><div></div><div></div><div></div><div></div></div>}
       </div>
     </div>
   )

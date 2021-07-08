@@ -7,7 +7,7 @@ const NewMint = ({ newToken, newMintJSON, setIsNewMint, setAddBlur }) => {
 
   let contractAddress = parsed.address;
   let trxHash = parsed.transactionHash;
-  let image = uriParsed.image;
+  let image = uriParsed.properties.image.description;
 
   return (
     <div className="new-mint">
