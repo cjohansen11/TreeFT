@@ -7,11 +7,11 @@ The application is capable of generating random art with P5, mint custom ERC71 t
 I originally set this project up with AWS S3 however in the spirit of blockchain I migrated the file system to IPFS utilizing a locally hosted node for uploads.
 ## Tech Stack
 
-**Client:** React, P5, Axios, Webpack, and CSS
+**Front-end:** React, P5, Axios, Webpack, and CSS
 
 **Blockchain:** Solidity, Truffle, Ganache, Web3, and Remix
 
-**Server:** NodeJS, Express, and IPFS
+**Back-end:** NodeJS, Express, and IPFS
 
 
 ## Screenshots
