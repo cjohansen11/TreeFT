@@ -1,7 +1,7 @@
 # TreeFT
 
 #### Overview:
-TreeFT is a generative art and blockchain project utilizing Solidity, Web3, IPFS, P5, and React.
+TreeFT is a generative art and blockchain project. This project was initially deployed to the Ethereum Rinkeby testnet and hosted locally during testing and demonstration.
 
 The application is capable of generating random art with P5, mint custom ERC71 tokens with URI data, fetch and display tokens based on the wallet account connected, and transfer tokens to another Ethereum wallet.
 
