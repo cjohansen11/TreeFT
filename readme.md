@@ -12,7 +12,7 @@ This project was initially set up with AWS S3 however in the spirit of blockchai
 
 **Front-end:** [React](https://www.reactjs.org), [P5](https://p5js.org/), [Axios](https://github.com/axios/axios), [Webpack](https://webpack.js.org/), and CSS
 
-**Blockchain:** [Solidity](https://docs.soliditylang.org/), [Truffle & Ganache](https://www.trufflesuite.com/), [Web3](https://web3js.readthedocs.io/), and [Remix](https://remix.ethereum.org/)
+**Blockchain:** [Solidity](https://docs.soliditylang.org/), [OpenZeppelin](https://openzeppelin.com/), [Truffle & Ganache](https://www.trufflesuite.com/), [Web3](https://web3js.readthedocs.io/), and [Remix](https://remix.ethereum.org/)
 
 **Back-end:** [Node.js](https://nodejs.org/), [Express](https://expressjs.com/), and [IPFS](https://ipfs.io/)
 
