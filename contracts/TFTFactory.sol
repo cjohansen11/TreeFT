@@ -37,6 +37,9 @@ contract NFTCreatorFactory is IERC721, IERC721Metadata, ERC165, Ownable {
 
     constructor() Ownable() {}
 
+    /**
+     * @dev Minting functions for TFT tokens
+     */
     function _createTFT(string memory _tokenURI) internal {
         treeFTs.push(TreeFT(_tokenURI));
         uint256 id = treeFTs.length - 1;
@@ -51,6 +54,9 @@ contract NFTCreatorFactory is IERC721, IERC721Metadata, ERC165, Ownable {
         _createTFT(_tokenURI);
     }
 
+    /**
+     * @dev Getter function to return all TFTs owned by a given address
+     */
     function getTFTsToOwner(address _owner)
         public
         view

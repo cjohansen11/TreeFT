@@ -12,7 +12,6 @@ import { sketchToo } from './sketchToo.js';
  */
 const Web3 = require('web3');
 const { abi } = require('../../build/contracts/NFTCreatorFactory.json');
-// const { abi } = require('../../build/contracts/TFTFactory.json');
 const { contractAddr } = require('../../config/config.js');
 
 /**
