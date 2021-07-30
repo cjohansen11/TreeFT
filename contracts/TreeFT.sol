@@ -2,15 +2,18 @@
 
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
-contract TreeFT is ERC721URIStorage {
+contract TreeFT is ERC721Enumerable, Ownable {
 
     
     using Counters for Counters.Counter;
     using Strings for uint256;
+    using SafeMath for uint256;
 
     Counters.Counter private _tokenIdTracker;
     string private _baseTokenURI;
@@ -31,11 +34,18 @@ contract TreeFT is ERC721URIStorage {
         _baseTokenURI = baseTokenURI;
     }
 
-    function _baseURI() internal view override returns (string memory) {
+    function _baseURI() 
+        internal 
+        view 
+        override 
+        returns (string memory) 
+    {
         return _baseTokenURI;
     }
 
-    function generateNewTFT() external {
+    function generateNewTFT() 
+        external 
+    {
         require(_tokenIdTracker.current() < MAX_SUPPLY, "No more TFT's available");
 
         require(balanceOf(msg.sender) < _OWNERSHIP_CAP, "You already have the max number of TFT's allowed per wallet");
