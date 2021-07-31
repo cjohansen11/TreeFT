@@ -11,6 +11,8 @@ contract TreeFT is ERC721Enumerable, Ownable {
     
     using Counters for Counters.Counter;
 
+    mapping (address => uint256[]) private _ownerToIds;
+
     Counters.Counter private _tokenIdTracker;
     string private _baseTokenURI;
     uint256 public MAX_SUPPLY = 1000;
@@ -51,6 +53,8 @@ contract TreeFT is ERC721Enumerable, Ownable {
 
         _safeMint(msg.sender, newTokenId);
 
+        _ownerToIds[msg.sender].push(newTokenId);
+
         emit newTFT(msg.sender, newTokenId, tokenURI(newTokenId));
     }
 
@@ -59,16 +63,6 @@ contract TreeFT is ERC721Enumerable, Ownable {
         view
         returns (uint256[] memory)
     {
-        uint256 currentIdCount = _tokenIdTracker.current();
-        uint256[] memory ownedTokens = new uint256[](balanceOf(owner));
-        uint256 counter;
-        for (uint256 i = 1; i <= currentIdCount; i++) {
-            if (ownerOf(i) == owner) {
-                ownedTokens[counter] = i;
-                counter++;
-            }
-        }
-
-        return ownedTokens;
+        return _ownerToIds[owner];
     }
 }
