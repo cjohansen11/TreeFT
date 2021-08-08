@@ -5,15 +5,13 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/utils/Strings.sol";
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+
 
 contract TreeFT is ERC721Enumerable, Ownable {
-
     
     using Counters for Counters.Counter;
-    using Strings for uint256;
-    using SafeMath for uint256;
+
+    mapping (address => uint256[]) private _ownerToIds;
 
     Counters.Counter private _tokenIdTracker;
     string private _baseTokenURI;
@@ -55,6 +53,16 @@ contract TreeFT is ERC721Enumerable, Ownable {
 
         _safeMint(msg.sender, newTokenId);
 
+        _ownerToIds[msg.sender].push(newTokenId);
+
         emit newTFT(msg.sender, newTokenId, tokenURI(newTokenId));
+    }
+
+    function allOwnedTokens(address owner) 
+        external
+        view
+        returns (uint256[] memory)
+    {
+        return _ownerToIds[owner];
     }
 }
